@@ -236,6 +236,68 @@ $dimensions: 16 24 32 48 64 96 128 !default;
     }
   }
 
+  &.is-vertical {
+    .timeline-header {
+      display: flex;
+      width: 100%;
+      align-self: center;
+    }
+
+    .timeline-item {
+      width: 50%;
+      align-self: flex-end;
+      flex-direction: row;
+
+      &.is-left {
+        align-self: flex-start;
+        flex-direction: row-reverse;
+        margin-left: 0;
+        margin-right: $timeline-item-padding-left;
+
+        &::before {
+          right: -($timeline-line-width * 0.5);
+          left: auto;
+        }
+
+        .timeline-marker {
+          transform: translateX(50%);
+        }
+
+        .timeline-content {
+          padding: $timeline-rtl-content-padding;
+          text-align: right;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          flex-basis: 100%;
+        }
+      }
+
+      &.is-right {
+        &::before {
+          content: "";
+          background-color: $timeline-line-color;
+          display: block;
+          width: $timeline-line-width;
+          height: 100%;
+          position: absolute;
+          top: 0;
+        }
+      }
+
+      @each $name, $pair in dv.$colors {
+        $color: nth($pair, 1);
+        $color-invert: fn.bulmaFindColorInvert($color);
+
+        &.is-#{$name} {
+          &::before {
+            background-color: $color;
+          }
+        }
+      }
+    }
+  }
+
   &.is-rtl {
     justify-content: flex-end;
     align-items: flex-end;
